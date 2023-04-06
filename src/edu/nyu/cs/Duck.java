@@ -19,11 +19,8 @@ public class Duck {
      * @param x the x coordinate of this object on the screen
      * @param y the y coordinate of this object on the screen
      */
-    public Duck(Game app, String imgFilePath, int x, int y, int speed) {
+    public Duck(Game app, int x, int y, int speed) {
         this.app = app; // store a reference to the main game object
-
-        // load the specified image
-        this.img = app.loadImage(imgFilePath);
 
         // store the x and y coordinates of this object on the screen
         this.x = x;

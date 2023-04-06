@@ -46,10 +46,14 @@ public class Fish {
         else if (this.x < 10) {
             this.x = 10;
         }
-        else if (this.x > this.app.width) {
+        else if (this.x > Game.WIDTH) {
             this.x = 390;
         }
     } 
+
+    public int fishLoc() {
+        return this.x, this.y;
+    }
     
     
 }

@@ -23,14 +23,30 @@ public class Game extends PApplet {
 
   private SoundFile soundStartup; // will refer to a sound file to play when the program first starts
   private SoundFile soundClick; // will refer to a sound file to play when the user clicks the mouse
-  private PImage imgMe; // will hold a photo of me
-  private ArrayList<Duck> ducks; // will hold an ArrayList of Star objects
-  private final int NUM_DUCKS = 4; // the number of stars to create
+
+  private ArrayList<Duck> ducks; // will hold an ArrayList of Duck objects
   private Fish fish;
+
+  //window size of this app
+	private static final int WIDTH = 400;
+	private static final int HEIGHT = 400;
+
+  private boolean game;
+
+  /**
+   * A method that can be used to modify settings of the window, such as set its size.
+   * This method shouldn't really be used for anything else.  
+   * Use the setup() method for most other tasks to perform when the program first runs.
+   */
+  public void settings() {
+		size(Game.WIDTH, Game.HEIGHT); // set the map window size, using the OpenGL 2D rendering engine
+		System.out.println(String.format("Set up the window size: %d, %d.", width, height));    
+  }
 
 	/**
 	 * This method will be automatically called by Processing when the program runs.
    * - Use it to set up the initial state of any instance properties you may use in the draw method.
+   * Called once on load. Used to create the  window and "global" settings.
 	 */
 	public void setup() {
     // set the cursor to crosshairs
@@ -45,10 +61,6 @@ public class Game extends PApplet {
     // load up a sound file and play it once when the user clicks
 		path = Paths.get(cwd, "sounds", "thump.aiff").toString(); // e.g "sounds/thump.aiff" on Mac/Unix vs. "sounds\thump.aiff" on Windows
     this.soundClick = new SoundFile(this, path); // if you're on Windows, you may have to change this to "sounds\\thump.aiff"
- 
-    // load up an image of me
-		path = Paths.get(cwd, "images", "me.png").toString(); // e.g "images/me.png" on Mac/Unix vs. "images\me.png" on Windows
-    this.imgMe = loadImage(path);
 
     // some basic settings for when we draw shapes
     this.ellipseMode(PApplet.CENTER); // setting so ellipses radiate away from the x and y coordinates we specify.
@@ -56,6 +68,17 @@ public class Game extends PApplet {
 
     // initialize fish
     fish = new Fish(app, 200, 390);
+
+    // initialize ducks with random speeds
+    // create the ducks with random speeds
+    double s = Math.random()*3 + 1;
+    for (int i = 0; i < 4; i++) {
+      ducks[i] = new Duck(0,(i*100)+45,s);
+      s = Math.random()*3 +1 ;      
+    }
+
+
+    game = false;
     
 	}
 
@@ -66,25 +89,14 @@ public class Game extends PApplet {
 	 */
 	public void draw() {
     // fill the window with solid color
-    this.background(0, 0, 0); // fill the background with the specified r, g, b color.
-
-    // show an image of me that wanders around the window
-    image(this.imgMe, this.width / 2, this.height/2); // draw image to center of window
-
-    // draw an ellipse at the current position of the mouse
-    this.fill(255, 255, 255); // set the r, g, b color to use for filling in any shapes we draw later.
-    this.ellipse(this.mouseX, this.mouseY, 60, 60); // draw an ellipse wherever the mouse is
+    this.background(171,221,255); 
 
     // draw all ducks to their current position
     for (int i=0; i < this.ducks.size(); i++) {
-      Duck duck = this.ducks.get(i); // get the current Star object from the ArrayList
-      duck.draw(); // draw the star to the screen
+      Duck duck = this.ducks.get(i); // get the current Duck object from the ArrayList
+      duck.draw(); 
       duck.swim();
     }
-
-    // show the score at the bottom of the window
-    String scoreString = String.format("SCORE: %d", this.score);
-    text(scoreString, this.width/2, this.height-50);
 
 	}
 
@@ -106,7 +118,7 @@ public class Game extends PApplet {
         text("Click the screen to start", width/2, height/2 + 70);
         
       // start button
-      if (mouseIsPressed == true) {
+      if (mousePressed) {
         background(171,221,255);
         game = true;
       } 
@@ -158,16 +170,7 @@ public class Game extends PApplet {
 		System.out.println(String.format("Mouse dragging at: %d:%d.", mouseX, mouseY));
 	}
 
-  /**
-   * A method that can be used to modify settings of the window, such as set its size.
-   * This method shouldn't really be used for anything else.  
-   * Use the setup() method for most other tasks to perform when the program first runs.
-   */
-  public void settings() {
-		size(400, 400); // set the map window size, using the OpenGL 2D rendering engine
-		System.out.println(String.format("Set up the window size: %d, %d.", width, height));    
-  }
-
+  
   /**
    * The main function is automatically called first in a Java program.
    * When using the Processing library, this method must call PApplet's main method and pass it the full class name, including package.
