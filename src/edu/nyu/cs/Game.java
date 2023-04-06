@@ -70,13 +70,11 @@ public class Game extends PApplet {
     fish = new Fish(app, 200, 390);
 
     // initialize ducks with random speeds
-    // create the ducks with random speeds
     double s = Math.random()*3 + 1;
     for (int i = 0; i < 4; i++) {
-      ducks[i] = new Duck(0,(i*100)+45,s);
+      ducks.add(new Duck(app, 0,(i*100)+45,s));
       s = Math.random()*3 +1 ;      
     }
-
 
     game = false;
     
@@ -91,12 +89,31 @@ public class Game extends PApplet {
     // fill the window with solid color
     this.background(171,221,255); 
 
-    // draw all ducks to their current position
-    for (int i=0; i < this.ducks.size(); i++) {
-      Duck duck = this.ducks.get(i); // get the current Duck object from the ArrayList
-      duck.draw(); 
-      duck.swim();
+    startScreen();
+    mouseClicked();
+
+    //play game
+    if (game == true) {
+      //end zone
+      noStroke();
+      fill(144,238,144);
+      rect(0,0,400,30);
+      
+      //fish
+      fish.draw();
+
+      //for loop to make all the ducks swim
+      for (int i=0; i < this.ducks.size(); i++) {
+        Duck duck = this.ducks.get(i); // get the current Duck object from the ArrayList
+        duck.draw(); 
+        duck.swim();
+      }
+
+      //call endGame
+      endGame();
     }
+
+
 
 	}
 
@@ -107,21 +124,12 @@ public class Game extends PApplet {
         noStroke();
         textAlign(CENTER, CENTER);
         textSize(40);
-        textStyle(BOLD);
         text("CROSSY POND", width/2, height/2 - 30);
         fill(255);
         textSize(20);
-        textStyle(NORMAL);
         text("Use the arrow keys to cross the pond.", width/2, height/2 +10);
         text("Don't get eaten by a duck!", width/2, height/2 + 40);
-        textStyle(ITALIC);
         text("Click the screen to start", width/2, height/2 + 70);
-        
-      // start button
-      if (mousePressed) {
-        background(171,221,255);
-        game = true;
-      } 
     }
   }
 
@@ -134,20 +142,18 @@ public class Game extends PApplet {
     // the `key` variable holds the char of the key that was pressed, the `keyCode` variable holds the ASCII/Unicode numeric code for that key.
 		System.out.println(String.format("Key pressed: %s, key code: %d.", this.key, this.keyCode));
     // key movement
-    switch (key):
-    case (this.keyCode)
 
-    if (this.keyCode == LEFT_ARROW) {
+    if (this.keyCode == LEFT) {
       fish.move(-1, 0);
     } 
-    else if (keyIsDown(RIGHT_ARROW)) {
-        fish.move(1, 0);
+    else if (this.keyCode == RIGHT) {
+      fish.move(1, 0);
     } 
-    else if (keyIsDown(DOWN_ARROW)) {
-        fish.move(0, 1);
+    else if (this.keyCode == DOWN) {
+      fish.move(0, 1);
     } 
-    else if (keyIsDown(UP_ARROW)) {
-        fish.move(0, -1);
+    else if (this.keyCode == UP) {
+      fish.move(0, -1);
     }
 
 	}  
@@ -159,8 +165,13 @@ public class Game extends PApplet {
    */
 	public void mouseClicked() {
 		System.out.println(String.format("Mouse clicked at: %d:%d.", this.mouseX, this.mouseY));
-
+    background(171,221,255);
+    game = true;
 	}
+
+  public void endGame() {
+    // check if fish overlaps with duck
+  }
 
 	/**
 	 * This method is automatically called by Processing every time the user presses down and drags the mouse.
