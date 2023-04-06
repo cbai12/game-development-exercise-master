@@ -51,8 +51,14 @@ public class Fish {
         }
     } 
 
-    public int fishLoc() {
-        return this.x, this.y;
+    // getters
+    
+    public int fishX() {
+        return this.x;
+    }
+
+    public int fishY() {
+        return this.y;
     }
     
     

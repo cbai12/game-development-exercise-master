@@ -96,6 +96,15 @@ public class Duck {
 
     }
 
+    // getters
+    public int duckX() {
+        return this.x;
+    }
+
+    public int duckY() {
+        return this.y;
+    }
+
     /**
      * Determines whether a given x, y coordinate overlaps with this Star.
      * @param x The x coordinate of interest.
