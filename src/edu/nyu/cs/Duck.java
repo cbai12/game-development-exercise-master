@@ -7,10 +7,10 @@ import processing.core.PImage;
 public class Duck {
     // instance properties
     private Game app; // will hold a reference to the main Game object
-    private int x; // will hold the x coordinate of this object on the screen
+    private float x; // will hold the x coordinate of this object on the screen
     private int y; // will hold the y coordinate of this object on the screen
     //private ArrayList<Integer> history;
-    private int speed;
+    private float speed;
 
     /**
      * Constructor to create a Star object at a specific position on the screen
@@ -18,8 +18,8 @@ public class Duck {
      * @param x the x coordinate of this object on the screen
      * @param y the y coordinate of this object on the screen
      */
-    public Duck(Game app, int x, int y, int speed) {
-        this.app = app; // store a reference to the main game object
+    public Duck( int x, int y, float speed) {
+        //this.app = app; // store a reference to the main game object
 
         // store the x and y coordinates of this object on the screen
         this.x = x;
@@ -76,7 +76,8 @@ public class Duck {
      */
     public void swim() {
         // update x with speed to swim across screen
-        this.x = this.x + this.speed;
+        float currentX = (float) this.x;
+        this.x = currentX + this.speed;
         
         /**
          * update trail behind duck
@@ -96,7 +97,7 @@ public class Duck {
     }
 
     // getters
-    public int duckX() {
+    public float duckX() {
         return this.x;
     }
 

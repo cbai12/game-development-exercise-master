@@ -13,9 +13,9 @@ public class Fish {
      * @param y the y coordinate of this object on the screen
      */
 
-    public Fish(Game app, int x, int y) {
+    public Fish(int x, int y) {
 
-        this.app = app; // store a reference to the main game object
+       //this.app = app; // store a reference to the main game object
         // store the x and y coordinates of this object on the screen
         this.x = x;
         this.y = y;

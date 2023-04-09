@@ -1,5 +1,7 @@
 package edu.nyu.cs;
 
+import static org.mockito.ArgumentMatchers.floatThat;
+
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
@@ -52,8 +54,8 @@ public class Game extends PApplet {
 	public void setup() {
     // set the cursor to crosshairs
     this.cursor(PApplet.CROSS);
-
-    // load up a sound file and play it once when program starts up
+    /** 
+     * // load up a sound file and play it once when program starts up
 		String cwd = Paths.get("").toAbsolutePath().toString(); // the current working directory as an absolute path
 		String path = Paths.get(cwd, "sounds", "vibraphon.mp3").toString(); // e.g "sounds/vibraphon.mp3" on Mac/Unix vs. "sounds\vibraphon.mp3" on Windows
     this.soundStartup = new SoundFile(this, path);
@@ -62,19 +64,20 @@ public class Game extends PApplet {
     // load up a sound file and play it once when the user clicks
 		path = Paths.get(cwd, "sounds", "thump.aiff").toString(); // e.g "sounds/thump.aiff" on Mac/Unix vs. "sounds\thump.aiff" on Windows
     this.soundClick = new SoundFile(this, path); // if you're on Windows, you may have to change this to "sounds\\thump.aiff"
-
+  */
+    
     // some basic settings for when we draw shapes
     this.ellipseMode(PApplet.CENTER); // setting so ellipses radiate away from the x and y coordinates we specify.
     this.imageMode(PApplet.CENTER); // setting so the ellipse radiates away from the x and y coordinates we specify.
 
     // initialize fish
-    fish = new Fish(app, 200, 390);
+    fish = new Fish(200, 390);
 
     // initialize ducks with random speeds
-    double s = Math.random()*3 + 1;
+    float s = (float) Math.random()*3 + 1;
     for (int i = 0; i < 4; i++) {
-      ducks.add(new Duck(app, 0,(i*100)+45,s));
-      s = Math.random()*3 +1 ;      
+      ducks.add(new Duck(0,(i*100)+45,s));
+      s = (float) Math.random()*3 +1 ;      
     }
 
     game = false;
@@ -173,8 +176,8 @@ public class Game extends PApplet {
       // duck boundaries
       int duckTop = duck.duckY()+24;
       int duckBottom = duck.duckY()-24;
-      int duckLeft = duck.duckX()-30;
-      int duckRight = duck.duckX()+30;
+      float duckLeft = duck.duckX()-30;
+      float duckRight = duck.duckX()+30;
 
       if (fish.fishY() <= duckTop && fish.fishY() >= duckBottom && fish.fishX() <= duckRight && fish.fishX() >= duckLeft)  {
         game = false;
