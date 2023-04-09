@@ -32,6 +32,7 @@ public class Game extends PApplet {
 	private static final int HEIGHT = 400;
 
   private boolean game;
+  private boolean eaten;
 
   /**
    * A method that can be used to modify settings of the window, such as set its size.
@@ -112,13 +113,10 @@ public class Game extends PApplet {
       //call endGame
       endGame();
     }
-
-
-
 	}
 
   public void startScreen() {
-    // start screen
+    //start screen
       if (game == false) {
         fill(255);
         noStroke();
@@ -142,7 +140,6 @@ public class Game extends PApplet {
     // the `key` variable holds the char of the key that was pressed, the `keyCode` variable holds the ASCII/Unicode numeric code for that key.
 		System.out.println(String.format("Key pressed: %s, key code: %d.", this.key, this.keyCode));
     // key movement
-
     if (this.keyCode == LEFT) {
       fish.move(-1, 0);
     } 
@@ -171,6 +168,25 @@ public class Game extends PApplet {
 
   public void endGame() {
     // check if fish overlaps with duck
+    for (int i = 0; i < this.ducks.size(); i++) {
+      Duck duck = this.ducks.get(i); // get the current Duck object from the ArrayList
+      // duck boundaries
+      int duckTop = duck.duckY()+24;
+      int duckBottom = duck.duckY()-24;
+      int duckLeft = duck.duckX()-30;
+      int duckRight = duck.duckX()+30;
+
+      if (fish.fishY() <= duckTop && fish.fishY() >= duckBottom && fish.fishX() <= duckRight && fish.fishX() >= duckLeft)  {
+        game = false;
+        eaten = true;
+      }
+
+    // check if fish successfully reaches end zone
+    if ((fish.fishY() + 10) < 30) {
+      game = false;
+      eaten = false;
+    }
+
   }
 
 	/**

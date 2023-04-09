@@ -46,7 +46,7 @@ public class Fish {
         else if (this.x < 10) {
             this.x = 10;
         }
-        else if (this.x > Game.WIDTH) {
+        else if (this.x > 400) {
             this.x = 390;
         }
     } 
