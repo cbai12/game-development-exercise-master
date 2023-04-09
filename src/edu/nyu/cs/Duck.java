@@ -78,6 +78,11 @@ public class Duck {
         // update x with speed to swim across screen
         float currentX = (float) this.x;
         this.x = currentX + this.speed;
+
+        if ((this.x - 27.5) > 400) {
+            this.x = this.speed * -1;
+            //this.history = [];
+        }
         
         /**
          * update trail behind duck
