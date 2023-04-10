@@ -26,14 +26,16 @@ public class Game extends PApplet {
   private SoundFile soundStartup; // will refer to a sound file to play when the program first starts
   private SoundFile soundClick; // will refer to a sound file to play when the user clicks the mouse
 
-  private ArrayList<Duck> ducks; // will hold an ArrayList of Duck objects
+  private ArrayList<Duck> ducks = new ArrayList<Duck>(); // will hold an ArrayList of Duck objects
   private Fish fish;
-  private ArrayList<Lilypad> lilys;
+  private ArrayList<Lilypad> lilys = new ArrayList<Lilypad>();
 
   //window size of this app
 	private static final int WIDTH = 400;
 	private static final int HEIGHT = 400;
 
+  private boolean start;
+  private boolean hit;
   private boolean game;
   private boolean eaten;
 
@@ -72,21 +74,28 @@ public class Game extends PApplet {
     this.imageMode(PApplet.CENTER); // setting so the ellipse radiates away from the x and y coordinates we specify.
 
     // initialize fish
-    fish = new Fish(200, 390);
+    fish = new Fish(this, 200, 390);
 
     // initialize ducks with random speeds
-    float s = (float) Math.random()*3 + 1;
-    for (int i = 0; i < 4; i++) {
-      ducks.add(new Duck(0,(i*100)+45,s));
-      s = (float) Math.random()*3 +1 ;      
+    float s = (float) Math.random()*2 + 1;
+    for (int i = 0; i < 3; i++) {
+      Duck duck = new Duck(this, 0,(i*100)+45,s);
+      ducks.add(duck);
+      s = (float) Math.random()*2 +1 ;      
     }
+    //overloaded constructor ducks
+    Duck slowDuck = new Duck(this, 200, 200);
+    Duck sleepDuck = new Duck(this);
+    ducks.add(slowDuck);
+    ducks.add(sleepDuck);
+
 
     // initialize lilypads w different locations
     for (int i = 0; i < 4; i++) {
-      lilys.add(new Lilypad((i+30)*20,(i*100)+45));      
+      lilys.add(new Lilypad(this, (i+60)*20,(i*100)+45));      
     }
 
-    game = false;
+    start = false;
     
 	}
 
@@ -98,12 +107,11 @@ public class Game extends PApplet {
 	public void draw() {
     // fill the window with solid color
     this.background(171,221,255); 
-
+    //display the start screen
     startScreen();
-    mouseClicked();
-
+    //mouse clicked
     //play game
-    if (game == true) {
+    if (start == true) {
       //end zone
       noStroke();
       fill(144,238,144);
@@ -112,21 +120,33 @@ public class Game extends PApplet {
       //fish
       fish.draw();
 
+      //lilypads
+      for (int j=0; j < this.lilys.size(); j++) {
+        Lilypad lily = this.lilys.get(j);
+        lily.draw();
+        lily.move();
+      }
+
       //for loop to make all the ducks swim
       for (int i=0; i < this.ducks.size(); i++) {
         Duck duck = this.ducks.get(i); // get the current Duck object from the ArrayList
         duck.draw(); 
         duck.swim();
       }
-
       //call endGame
       endGame();
+      if (game == false) {
+        //finalMessage();
+      }
     }
+
+    
+    
 	}
 
   public void startScreen() {
     //start screen
-      if (game == false) {
+      if (start == false) {
         fill(255);
         noStroke();
         textAlign(CENTER, CENTER);
@@ -172,7 +192,7 @@ public class Game extends PApplet {
 	public void mouseClicked() {
 		System.out.println(String.format("Mouse clicked at: %d:%d.", this.mouseX, this.mouseY));
     background(171,221,255);
-    game = true;
+    start = true;
 	}
 
   public void endGame() {
@@ -189,11 +209,12 @@ public class Game extends PApplet {
         game = false;
         eaten = true;
       }
+    }
 
     // check if fish overlaps with lilypad
-    for (int j = 0; j < this.lilys.size(); i++) {
-      Lilypad lily = this.lilys.get(i); // get the current object from the ArrayList
-      // duck boundaries
+    for (int j = 0; j < this.lilys.size(); j++) {
+      Lilypad lily = this.lilys.get(j); // get the current object from the ArrayList
+      // lilupad boundaries
       int lilyTop = lily.lilyY()+12;
       int lilyBottom = lily.lilyY()-12;
       float lilyLeft = lily.lilyX()-20;
@@ -201,16 +222,49 @@ public class Game extends PApplet {
 
       if (fish.fishY() <= lilyTop && fish.fishY() >= lilyBottom && fish.fishX() <= lilyRight && fish.fishX() >= lilyLeft)  {
         game = false;
-        //lily = true;
+        hit = true;
       }
+    }
 
     // check if fish successfully reaches end zone
     if ((fish.fishY() + 10) < 30) {
       game = false;
       eaten = false;
+      hit = false;
     }
 
   }
+
+  public void finalMessage() {
+    // win game
+    if (start == true && eaten == false && hit == false) {
+      background(144,238,144);
+      fill(255);
+      noStroke();
+      textAlign(CENTER, CENTER);
+      textSize(20);
+      text("You safely made it to the other side!", width/2, height/2);
+    }
+    // lose game bc eaten
+    else if (start == true && eaten == true) {
+      background(200,90,10); //red
+      fill(255);
+      noStroke();
+      textAlign(CENTER, CENTER);
+      textSize(20);
+      text("You were eaten by a duck :/", width/2, height/2);
+    }
+
+    else if (start == true && hit == true) {
+      background(200,90,10); //red
+      fill(255);
+      noStroke();
+      textAlign(CENTER, CENTER);
+      textSize(20);
+      text("You were hit by a lilpad :/", width/2, height/2);
+    }
+  }
+
 
 	/**
 	 * This method is automatically called by Processing every time the user presses down and drags the mouse.

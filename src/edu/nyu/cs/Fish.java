@@ -13,9 +13,9 @@ public class Fish {
      * @param y the y coordinate of this object on the screen
      */
 
-    public Fish(int x, int y) {
+    public Fish(Game app, int x, int y) {
 
-       //this.app = app; // store a reference to the main game object
+        this.app = app; // store a reference to the main game object
         // store the x and y coordinates of this object on the screen
         this.x = x;
         this.y = y;
@@ -38,7 +38,6 @@ public class Fish {
     public void move(int xdir, int ydir) {
         this.x = this.x + (xdir*5);
         this.y = this.y + (ydir*10); 
-          
         // prevent from going beyond border
         if (this.y > 390) {
             this.y = 390;

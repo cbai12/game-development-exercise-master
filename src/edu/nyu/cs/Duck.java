@@ -18,8 +18,10 @@ public class Duck {
      * @param x the x coordinate of this object on the screen
      * @param y the y coordinate of this object on the screen
      */
-    public Duck( int x, int y, float speed) {
-        //this.app = app; // store a reference to the main game object
+    
+     // constructor used when all dimensions
+     public Duck(Game app, int x, int y, float speed) {
+        this.app = app; // store a reference to the main game object
 
         // store the x and y coordinates of this object on the screen
         this.x = x;
@@ -30,6 +32,23 @@ public class Duck {
         //this.history = new ArrayList<Integer>();
 
     }
+
+    // constructor used when no dimensions specified
+    public Duck(Game app) {
+        this.app = app;
+        this.x = 0;
+        this.y = 250;
+        this.speed = 0;
+    }
+
+    // constructor used when only x and y specified
+    public Duck(Game app, int x, int y) {
+        this.app = app;
+        this.x = x;
+        this.y = y;
+        this.speed = 1;
+    }
+
 
     /**
      * Draw this star's image to the screen at the appropriate coordinates
@@ -86,10 +105,6 @@ public class Duck {
         
         /**
          * update trail behind duck
-         * if ((this.x - 27.5) > width) {
-            this.x = this.speed * -1;
-            this.history = [];
-        }
          * let v = createVector(this.x,this.y)
          * this.history.push(v);
          * if (this.history.length > 30) {

@@ -13,12 +13,12 @@ public class Lilypad {
      * @param y the y coordinate of this object on the screen
      */
 
-     public Lilypad(int x, int y) {
+     public Lilypad(Game app, int x, int y) {
 
-        //this.app = app; // store a reference to the main game object
+        this.app = app; // store a reference to the main game object
          // store the x and y coordinates of this object on the screen
-         this.x = x;
-         this.y = y;
+        this.x = x;
+        this.y = y;
  
      }
 
@@ -28,7 +28,7 @@ public class Lilypad {
 
     public void draw() {
         this.app.noStroke();
-        this.app.fill(153,255,51);
+        this.app.fill(76, 161, 76);
         this.app.ellipse(this.x, this.y,40,25);  
     }
 
