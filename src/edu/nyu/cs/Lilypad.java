@@ -1,0 +1,59 @@
+package edu.nyu.cs;
+
+public class Lilypad {
+    // instance properties
+    private Game app; // will hold a reference to the main Game object
+    private int x; // will hold the x coordinate of this object on the screen
+    private int y; // will hold the y coordinate of this object on the screen
+
+     /**
+     * Constructor to create a Fish object at a specific position on the screen
+     * @param app a reference to the Game object that created this object
+     * @param x the x coordinate of this object on the screen
+     * @param y the y coordinate of this object on the screen
+     */
+
+     public Lilypad(int x, int y) {
+
+        //this.app = app; // store a reference to the main game object
+         // store the x and y coordinates of this object on the screen
+         this.x = x;
+         this.y = y;
+ 
+     }
+
+    /**
+     * Draw this to the screen at the appropriate coordinates
+     */
+
+    public void draw() {
+        this.app.noStroke();
+        this.app.fill(153,255,51);
+        this.app.ellipse(this.x, this.y,40,25);  
+    }
+
+    /**
+     * Have the lilypad move across the screen
+     */
+    public void move() {
+        // update x with speed to swim across screen
+        int speed = 1;
+        this.x = this.x+speed;
+        //when crosses border
+        if ((this.x - 20) > 400) {
+            this.x = speed * -1;
+        }
+    }
+
+    // getters
+    
+    public int lilyX() {
+        return this.x;
+    }
+
+    public int lilyY() {
+        return this.y;
+    }
+
+
+}

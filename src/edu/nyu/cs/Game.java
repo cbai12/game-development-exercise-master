@@ -28,6 +28,7 @@ public class Game extends PApplet {
 
   private ArrayList<Duck> ducks; // will hold an ArrayList of Duck objects
   private Fish fish;
+  private ArrayList<Lilypad> lilys;
 
   //window size of this app
 	private static final int WIDTH = 400;
@@ -78,6 +79,11 @@ public class Game extends PApplet {
     for (int i = 0; i < 4; i++) {
       ducks.add(new Duck(0,(i*100)+45,s));
       s = (float) Math.random()*3 +1 ;      
+    }
+
+    // initialize lilypads w different locations
+    for (int i = 0; i < 4; i++) {
+      lilys.add(new Lilypad((i+30)*20,(i*100)+45));      
     }
 
     game = false;
@@ -182,6 +188,20 @@ public class Game extends PApplet {
       if (fish.fishY() <= duckTop && fish.fishY() >= duckBottom && fish.fishX() <= duckRight && fish.fishX() >= duckLeft)  {
         game = false;
         eaten = true;
+      }
+
+    // check if fish overlaps with lilypad
+    for (int j = 0; j < this.lilys.size(); i++) {
+      Lilypad lily = this.lilys.get(i); // get the current object from the ArrayList
+      // duck boundaries
+      int lilyTop = lily.lilyY()+12;
+      int lilyBottom = lily.lilyY()-12;
+      float lilyLeft = lily.lilyX()-20;
+      float lilyRight = lily.lilyX()+20;
+
+      if (fish.fishY() <= lilyTop && fish.fishY() >= lilyBottom && fish.fishX() <= lilyRight && fish.fishX() >= lilyLeft)  {
+        game = false;
+        //lily = true;
       }
 
     // check if fish successfully reaches end zone
