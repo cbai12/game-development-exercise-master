@@ -1,31 +1,18 @@
 package edu.nyu.cs;
 
-import static org.mockito.ArgumentMatchers.floatThat;
-
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.apache.commons.lang3.SystemUtils;
 
 import processing.core.*; // import the base Processing library
-import processing.sound.*; // import the processing sound library
 
 /**
- * Describe your game succinctly here, and update the author info below.
- * Some starter code has been included for your reference - feel free to delete
- * or modify it.
  * 
- * Crossy Road Dupe
- * 
- * 
- * 
+ * Crossy Pond
  * @author Claire Bai and Aimee Yu
  * @version 0.1
  */
 public class Game extends PApplet {
-
-  private SoundFile soundStartup; // will refer to a sound file to play when the program first starts
-  private SoundFile soundClick; // will refer to a sound file to play when the user clicks the mouse
 
   private ArrayList<Duck> ducks = new ArrayList<Duck>(); // will hold an ArrayList of Duck objects
   private Fish fish;
@@ -61,23 +48,7 @@ public class Game extends PApplet {
   public void setup() {
     // set the cursor to crosshairs
     this.cursor(PApplet.CROSS);
-    /**
-     * // load up a sound file and play it once when program starts up
-     * String cwd = Paths.get("").toAbsolutePath().toString(); // the current
-     * working directory as an absolute path
-     * String path = Paths.get(cwd, "sounds", "vibraphon.mp3").toString(); // e.g
-     * "sounds/vibraphon.mp3" on Mac/Unix vs. "sounds\vibraphon.mp3" on Windows
-     * this.soundStartup = new SoundFile(this, path);
-     * this.soundStartup.play();
-     * 
-     * // load up a sound file and play it once when the user clicks
-     * path = Paths.get(cwd, "sounds", "thump.aiff").toString(); // e.g
-     * "sounds/thump.aiff" on Mac/Unix vs. "sounds\thump.aiff" on Windows
-     * this.soundClick = new SoundFile(this, path); // if you're on Windows, you may
-     * have to change this to "sounds\\thump.aiff"
-     */
 
-    // some basic settings for when we draw shapes
     this.ellipseMode(PApplet.CENTER); // setting so ellipses radiate away from the x and y coordinates we specify.
     this.imageMode(PApplet.CENTER); // setting so the ellipse radiates away from the x and y coordinates we specify.
 
@@ -93,13 +64,11 @@ public class Game extends PApplet {
     }
     // overloaded constructor ducks
     Duck slowDuck = new Duck(this, 200, 200);
-    Duck sleepDuck = new Duck(this);
     ducks.add(slowDuck);
-    ducks.add(sleepDuck);
 
     // overloaded lilypad
-    Lilypad sleepLilypad = new Lilypad(this);
-    lilys.add(sleepLilypad);
+    //Lilypad sleepLilypad = new Lilypad(this);
+    //lilys.add(sleepLilypad);
     // initialize lilypads w different locations
     for (int i = 0; i < 4; i++) {
       lilys.add(new Lilypad(this, (i + 60) * 20, (i * 100) + 45));

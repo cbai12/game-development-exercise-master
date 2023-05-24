@@ -1,7 +1,6 @@
 package edu.nyu.cs;
 
 import processing.core.PApplet;
-import processing.core.PImage;
 
 /**
  * This represents the duck
